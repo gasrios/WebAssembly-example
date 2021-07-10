@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+	<script>
+
+	async function loadWebAssemblyFunctions(module) {
+		const { instance } = await WebAssembly.instantiate(await (await fetch(module)).arrayBuffer());
+		return instance.exports;
+	}
+
+	(async () => {
+
+		var math = await loadWebAssemblyFunctions('./math.wasm');
+
+		console.log(math.add(1,1));
+		console.log(math.subtract(1,1));
+		console.log(math.multiply(2,2));
+		console.log(math.divide(4,2));
+
+	})();
+	</script>
+</body>
+</html>
